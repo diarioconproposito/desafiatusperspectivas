@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workbook: El Desafío de la Perspectiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- CDN para jsPDF y html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #3D405B;
+        }
+        .page {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #FFFFFF;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .section-divider {
+            border-top: 1px dashed #E07A5F;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .question-box {
+            background-color: #F8F7F4;
+            border-left: 4px solid #F18701;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+        .answer-area {
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            background-color: #fff;
+            resize: vertical; /* Permite redimensionar verticalmente */
+        }
+        /* Estilos para impresión */
+        @media print {
+            body {
+                background-color: #fff;
+                color: #000;
+            }
+            .page {
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                padding: 0;
+            }
+            .answer-area {
+                border: 1px dashed #E07A5F;
+                min-height: 100px; /* Reducir altura para impresión */
+                height: auto;
+                background-color: transparent;
+            }
+            /* Ocultar botones en la vista de impresión */
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#F8F7F4]">
+
+    <main id="workbook-content" class="page antialiased">
+        
+        <header class="text-center mb-8">
+            <p class="text-xl font-bold text-[#E07A5F] mb-4">
+                <a href="https://www.instagram.com/diario_con_proposito" target="_blank" class="hover:underline">@diario_con_proposito</a>
+            </p>
+            <h1 class="text-4xl md:text-5xl font-bold text-[#3D405B] mb-2">El Desafío de la Perspectiva ✍️</h1>
+            <p class="text-xl text-[#E07A5F] font-medium">3 Preguntas para la Claridad</p>
+        </header>
+
+        <section class="intro mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Hola,</h2>
+            <p class="text-lg leading-relaxed text-gray-700">
+                A veces, la clave para resolver un problema no es pensar más, sino pensar diferente. La escritura es una de las herramientas más poderosas que existen para tomar distancia y obtener una visión más clara.
+            </p>
+            <p class="text-lg leading-relaxed text-gray-700 mt-2">
+                Este ejercicio de 10 minutos está diseñado para ayudarte a hacer precisamente eso: **tomar distancia para encontrar claridad**. Solo necesitas un cuaderno, o usar los espacios a continuación.
+            </p>
+            <p class="text-lg leading-relaxed text-gray-700 mt-2 p-4 border border-[#F18701] rounded-lg bg-yellow-50">
+                💡 **Consejo:** Puedes completar este workbook directamente aquí en tu dispositivo. ¡Tus respuestas se guardarán automáticamente! Si deseas una copia, puedes **Imprimirlo** o **Descargarlo como PDF**.
+            </p>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section class="questions mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-[#3D405B]">El Ejercicio de las 3 Preguntas</h2>
+
+            <div class="question-box mb-8">
+                <h3 class="text-xl font-bold text-[#F18701] mb-2">Pregunta 1: El Periodista Neutral 🕵️</h3>
+                <p class="text-gray-700">
+                    Describe la situación que te preocupa como si fueras un periodista que solo informa los hechos. Sin emociones, sin juicios, sin "creo que..." o "siento que...". Escribe de manera objetiva los datos duros.
+                </p>
+                <textarea id="answer1" class="answer-area" placeholder="Escribe aquí tu respuesta..."></textarea>
+            </div>
+
+            <div class="question-box mb-8">
+                <h3 class="text-xl font-bold text-[#F18701] mb-2">Pregunta 2: El Mejor Amigo Sabio 🧠</h3>
+                <p class="text-gray-700">
+                    Ahora, imagina que tu mejor amigo(a) está pasando exactamente por lo mismo. Escríbele una carta dándole el mejor consejo que se te ocurra. ¿Qué le dirías? ¿Qué pasos concretos le sugerirías?
+                </p>
+                <textarea id="answer2" class="answer-area" placeholder="Escribe aquí tu respuesta..."></textarea>
+            </div>
+
+            <div class="question-box">
+                <h3 class="text-xl font-bold text-[#F18701] mb-2">Pregunta 3: El Primer Paso 👟</h3>
+                <p class="text-gray-700">
+                    Después de leer tus propias respuestas a las preguntas 1 y 2, ¿cuál es la única acción, por pequeña que sea, que puedes tomar hoy para moverte hacia adelante? Escríbela y haz un compromiso contigo mismo(a).
+                </p>
+                <textarea id="answer3" class="answer-area" placeholder="Escribe aquí tu respuesta..."></textarea>
+            </div>
+        </section>
+        
+        <div class="section-divider"></div>
+
+        <section class="pnl-exercise mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-[#3D405B]">Extra: Re-encuadre de Pensamientos (PNL) ✨</h2>
+            <p class="text-lg leading-relaxed text-gray-700 mb-4">
+                Una vez que las 3 preguntas te han ayudado a tomar distancia de la situación, es común que identifiques un pensamiento o creencia limitante que te está deteniendo. Usa este ejercicio de Programación Neurolingüística (PNL) para trabajar directamente en tu diálogo interno y transformarlo en una creencia que te impulse a la acción.
+            </p>
+
+            <div class="question-box mb-8">
+                <h3 class="text-xl font-bold text-[#F18701] mb-2">1. Identifica el Pensamiento Limitante 🛑</h3>
+                <p class="text-gray-700">
+                    Escribe la frase exacta que te dices a ti mismo(a) y que te detiene. Por ejemplo: "No soy lo suficientemente bueno(a)" o "Nunca voy a lograrlo".
+                </p>
+                <textarea id="answer4" class="answer-area" placeholder="Escribe aquí tu respuesta..."></textarea>
+            </div>
+
+            <div class="question-box">
+                <h3 class="text-xl font-bold text-[#F18701] mb-2">2. El Re-encuadre Positivo ✅</h3>
+                <p class="text-gray-700">
+                    Ahora, reescribe esa misma frase en una versión que sea **positiva, empoderadora y realista**. Por ejemplo: "Estoy aprendiendo a tomar distancia a través de la escritura, lo que me permite ver mis limitaciones y transformarlas."
+                </p>
+                <textarea id="answer5" class="answer-area" placeholder="Escribe aquí tu respuesta..."></textarea>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+        <div class="no-print flex justify-center space-x-4 mb-8">
+            <button onclick="clearAnswers()" class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded-full hover:bg-gray-300 transition-colors duration-300">
+                Borrar todas las respuestas
+            </button>
+            <button onclick="window.print()" class="bg-[#E07A5F] text-white font-bold py-2 px-4 rounded-full hover:bg-[#c96c56] transition-colors duration-300">
+                Imprimir o guardar como PDF
+            </button>
+            <button onclick="generatePDF()" class="bg-[#3D405B] text-white font-bold py-2 px-4 rounded-full hover:bg-[#2A2B3D] transition-colors duration-300">
+                Descargar PDF
+            </button>
+        </div>
+
+        <footer class="text-center bg-[#E07A5F] text-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl md:text-3xl font-bold mb-2">Este fue solo el comienzo...</h2>
+            <p class="text-lg mb-4 leading-relaxed">
+                Si lograste tanta claridad con un solo ejercicio, imagina lo que puedes lograr con el workbook completo que te guiará a través de todo el proceso para descubrir **"Tu Poder, Tu Elección"**.
+            </p>
+            <a href="#" class="inline-block bg-white text-[#3D405B] font-bold py-3 px-6 rounded-full text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-md">
+                ¡Descubre tu verdadero poder ahora!
+            </a>
+            <p class="text-sm opacity-80 mt-4">
+                <a href="https://www.instagram.com/diario_con_proposito" target="_blank" class="hover:underline hover:text-white-700 transition-all duration-200">@diario_con_proposito</a>
+            </p>
+        </footer>
+    </main>
+
+    <script>
+        // Función para guardar las respuestas en localStorage
+        function saveAnswer(id, value) {
+            localStorage.setItem(id, value);
+        }
+
+        // Función para cargar las respuestas desde localStorage
+        function loadAnswers() {
+            document.querySelectorAll('textarea').forEach(textarea => {
+                const savedValue = localStorage.getItem(textarea.id);
+                if (savedValue) {
+                    textarea.value = savedValue;
+                }
+            });
+        }
+
+        // Cargar respuestas al iniciar la página
+        window.addEventListener('load', loadAnswers);
+
+        // Guardar respuestas al teclear
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('input', (e) => {
+                saveAnswer(e.target.id, e.target.value);
+            });
+        });
+
+        // Función para borrar todas las respuestas de la página y de localStorage
+        function clearAnswers() {
+            if (confirm('¿Estás seguro de que quieres borrar todas las respuestas? Esta acción no se puede deshacer.')) {
+                document.querySelectorAll('textarea').forEach(textarea => {
+                    textarea.value = '';
+                    localStorage.removeItem(textarea.id);
+                });
+            }
+        }
+        
+        // Función para generar y descargar el PDF
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const content = document.getElementById('workbook-content');
+            
+            // Ocultar botones antes de generar el PDF
+            const buttons = document.querySelector('.no-print');
+            buttons.style.display = 'none';
+
+            // Usar html2canvas para capturar el contenido
+            const canvas = await html2canvas(content, { 
+                scale: 2, 
+                useCORS: true, 
+                logging: false,
+                letterRendering: true,
+                allowTaint: false
+            });
+            
+            // Re-mostrar botones
+            buttons.style.display = 'flex';
+
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgWidth = 210; 
+            const pageHeight = 297; 
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('El-Desafio-de-la-Perspectiva.pdf');
+        }
+    </script>
+</body>
+</html>
